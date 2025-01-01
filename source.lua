@@ -111,14 +111,6 @@ loadSettings()
 --	repeat task.wait() until analytics ~= nil
 --end
 
-if #cachedSettings == 0 or (cachedSettings.System and cachedSettings.System.usageAnalytics and cachedSettings.System.usageAnalytics.Value) then
-	if useStudio then
-		print('Sending analytics')
-	else
-		local reporter = loadstring(game:HttpGet("https://analytics.sirius.menu/reporter"))()
-		reporter.report("0193dbf8-7da1-79de-b399-2c0f68b0a9ad", Release, InterfaceBuild)
-	end
-end
 
 local RayfieldLibrary = {
 	Flags = {},
@@ -536,7 +528,7 @@ repeat
 	buildAttempts = buildAttempts + 1
 until buildAttempts >= 2
 
-Rayfield.Enabled = false
+Rayfield.Enabled = true
 
 if gethui then
 	Rayfield.Parent = gethui()
@@ -605,7 +597,7 @@ local CFileName = nil
 local CEnabled = false
 local Minimised = false
 local Hidden = true
-local Debounce = true
+local Debounce = false
 local searchOpen = false
 local Notifications = Rayfield.Notifications
 
