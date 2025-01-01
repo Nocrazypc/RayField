@@ -9,8 +9,9 @@ iRay  | Programming
 ]]
 
 
+
 local Release = "Beta 8"
-local NotificationDuration = 1
+local NotificationDuration = 6.5
 local RayfieldFolder = "Rayfield"
 local ConfigurationFolder = RayfieldFolder.."/Configurations"
 local ConfigurationExtension = ".rfld"
@@ -115,8 +116,6 @@ local CoreGui = game:GetService("CoreGui")
 -- Interface Management
 local Rayfield = game:GetObjects("rbxassetid://10804731440")[1]
 
-print(Rayfield)
-
 Rayfield.Enabled = false
 
 
@@ -186,7 +185,7 @@ function ChangeTheme(ThemeName)
 	Rayfield.Main.BackgroundColor3 = SelectedTheme.Background
 	Rayfield.Main.Topbar.BackgroundColor3 = SelectedTheme.Topbar
 	Rayfield.Main.Topbar.CornerRepair.BackgroundColor3 = SelectedTheme.Topbar
-	-- Rayfield.Main.Shadow.Image.ImageColor3 = SelectedTheme.Shadow
+	Rayfield.Main.Shadow.Image.ImageColor3 = SelectedTheme.Shadow
 
 	Rayfield.Main.Topbar.ChangeSize.ImageColor3 = SelectedTheme.TextColor
 	Rayfield.Main.Topbar.Hide.ImageColor3 = SelectedTheme.TextColor
@@ -207,7 +206,7 @@ local function AddDraggingFunctionality(DragPoint, Main)
 	pcall(function()
 		local Dragging, DragInput, MousePos, FramePos = false
 		DragPoint.InputBegan:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 then
 				Dragging = true
 				MousePos = Input.Position
 				FramePos = Main.Position
@@ -220,7 +219,7 @@ local function AddDraggingFunctionality(DragPoint, Main)
 			end
 		end)
 		DragPoint.InputChanged:Connect(function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch then
+			if Input.UserInputType == Enum.UserInputType.MouseMovement then
 				DragInput = Input
 			end
 		end)
@@ -558,26 +557,26 @@ function RayfieldLibrary:Notify(NotificationSettings)
 		Notification.Size = UDim2.new(0, 260, 0, 80)
 		Notification.BackgroundTransparency = 1
 
-		TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 295, 0, 91)}):Play()
-		TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.1}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 295, 0, 91)}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.1}):Play()
 		Notification:TweenPosition(UDim2.new(0.5,0,0.915,0),'Out','Quint',0.8,true)
 
-		wait(0.1)
-		TweenService:Create(Notification.Icon, TweenInfo.new(0.15, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
-		TweenService:Create(Notification.Title, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
-		TweenService:Create(Notification.Description, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
-		wait(0.1)
+		wait(0.3)
+		TweenService:Create(Notification.Icon, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
+		TweenService:Create(Notification.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
+		wait(0.2)
 
 
 
 		-- Requires Graphics Level 8-10
 		if getgenv().SecureMode == nil then
-			TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.4}):Play()
+			TweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.4}):Play()
 		else
 			if not getgenv().SecureMode then
-				TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.4}):Play()
+				TweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.4}):Play()
 			else 
-				TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
+				TweenService:Create(Notification, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 			end
 		end
 
@@ -589,11 +588,11 @@ function RayfieldLibrary:Notify(NotificationSettings)
 		end
 
 		if not NotificationSettings.Actions then
-			task.wait(NotificationSettings.Duration or NotificationDuration - 0.5)
+			wait(NotificationSettings.Duration or NotificationDuration - 0.5)
 		else
-			wait(0.1)
+			wait(0.8)
 			TweenService:Create(Notification, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 295, 0, 132)}):Play()
-			wait(0.1)
+			wait(0.3)
 			for _, Action in ipairs(Notification.Actions:GetChildren()) do
 				if Action.ClassName == "TextButton" and Action.Name ~= "Template" then
 					TweenService:Create(Action, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.2}):Play()
@@ -603,42 +602,42 @@ function RayfieldLibrary:Notify(NotificationSettings)
 			end
 		end
 
-		repeat task.wait(1) until ActionCompleted
+		repeat wait(0.001) until ActionCompleted
 
 		for _, Action in ipairs(Notification.Actions:GetChildren()) do
 			if Action.ClassName == "TextButton" and Action.Name ~= "Template" then
-				TweenService:Create(Action, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
-				TweenService:Create(Action, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+				TweenService:Create(Action, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+				TweenService:Create(Action, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 			end
 		end
 
-		TweenService:Create(Notification.Title, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {Position = UDim2.new(0.47, 0,0.234, 0)}):Play()
-		TweenService:Create(Notification.Description, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {Position = UDim2.new(0.528, 0,0.637, 0)}):Play()
-		TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 280, 0, 83)}):Play()
-		TweenService:Create(Notification.Icon, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
-		TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.6}):Play()
+		TweenService:Create(Notification.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Position = UDim2.new(0.47, 0,0.234, 0)}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {Position = UDim2.new(0.528, 0,0.637, 0)}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 280, 0, 83)}):Play()
+		TweenService:Create(Notification.Icon, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.6}):Play()
 
 		wait(0.3)
-		TweenService:Create(Notification.Title, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {TextTransparency = 0.4}):Play()
-		TweenService:Create(Notification.Description, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {TextTransparency = 0.5}):Play()
+		TweenService:Create(Notification.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.4}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 0.5}):Play()
 		wait(0.4)
-		TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 260, 0, 0)}):Play()
-		TweenService:Create(Notification, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
-		TweenService:Create(Notification.Title, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
-		TweenService:Create(Notification.Description, TweenInfo.new(0.1, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.9, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 260, 0, 0)}):Play()
+		TweenService:Create(Notification, TweenInfo.new(0.8, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
+		TweenService:Create(Notification.Title, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
+		TweenService:Create(Notification.Description, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 		wait(0.2)
 		if not getgenv().SecureMode then
 			neon:UnbindFrame(Notification.BlurModule)
 			blurlight:Destroy()
 		end
-		wait(0.2)
+		wait(0.9)
 		Notification:Destroy()
 	end)
 end
 
 function Hide()
 	Debounce = true
-	-- RayfieldLibrary:Notify({Title = "Interface Hidden", Content = "The interface has been hidden, you can unhide the interface by tapping K", Duration = 1})
+	RayfieldLibrary:Notify({Title = "Interface Hidden", Content = "The interface has been hidden, you can unhide the interface by tapping K", Duration = 7})
 	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 470, 0, 400)}):Play()
 	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 470, 0, 45)}):Play()
 	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
@@ -646,7 +645,7 @@ function Hide()
 	TweenService:Create(Main.Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 	TweenService:Create(Main.Topbar.CornerRepair, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 	TweenService:Create(Main.Topbar.Title, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
-	-- TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 	TweenService:Create(Topbar.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
 	for _, TopbarButton in ipairs(Topbar:GetChildren()) do
 		if TopbarButton.ClassName == "ImageButton" then
@@ -658,7 +657,7 @@ function Hide()
 			TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 			TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 			TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
-			-- TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 			TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
 		end
 	end
@@ -695,7 +694,7 @@ function Unhide()
 	Main.Visible = true
 	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 475)}):Play()
 	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 45)}):Play()
-	-- TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 	TweenService:Create(Main.Topbar, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 	TweenService:Create(Main.Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
@@ -714,13 +713,13 @@ function Unhide()
 			if tostring(Elements.UIPageLayout.CurrentPage) == tabbtn.Title.Text then
 				TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
-				-- TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
 				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
 				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
 			else
 				TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.7}):Play()
 				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
-				-- TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
 				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
 				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
 			end
@@ -760,7 +759,7 @@ function Maximise()
 
 
 	TweenService:Create(Topbar.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
-	-- TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 	TweenService:Create(Topbar.CornerRepair, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 	TweenService:Create(Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 475)}):Play()
@@ -803,10 +802,10 @@ function Maximise()
 				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
 				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
 				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
-				-- TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
 			else
 				TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.7}):Play()
-				-- TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+				TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
 				TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
 				TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
 				TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
@@ -829,7 +828,7 @@ function Minimise()
 			TweenService:Create(tabbtn, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 			TweenService:Create(tabbtn.Image, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 			TweenService:Create(tabbtn.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
-			-- TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+			TweenService:Create(tabbtn.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 			TweenService:Create(tabbtn.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
 		end
 	end
@@ -858,7 +857,7 @@ function Minimise()
 	end
 
 	TweenService:Create(Topbar.UIStroke, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
-	-- TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 	TweenService:Create(Topbar.CornerRepair, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 	TweenService:Create(Topbar.Divider, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 	TweenService:Create(Main, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 495, 0, 45)}):Play()
@@ -877,11 +876,11 @@ function RayfieldLibrary:CreateWindow(Settings)
 	local Passthrough = false
 	Topbar.Title.Text = Settings.Name
 	Main.Size = UDim2.new(0, 450, 0, 260)
-	Main.Visible = false
+	Main.Visible = true
 	Main.BackgroundTransparency = 1
 	LoadingFrame.Title.TextTransparency = 1
 	LoadingFrame.Subtitle.TextTransparency = 1
-	-- Main.Shadow.Image.ImageTransparency = 1
+	Main.Shadow.Image.ImageTransparency = 1
 	LoadingFrame.Version.TextTransparency = 1
 	LoadingFrame.Title.Text = Settings.LoadingTitle or "Rayfield Interface Suite"
 	LoadingFrame.Subtitle.Text = Settings.LoadingSubtitle or "by Sirius"
@@ -890,7 +889,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 	end
 	Topbar.Visible = false
 	Elements.Visible = false
-	LoadingFrame.Visible = false
+	LoadingFrame.Visible = true
 
 
 	pcall(function()
@@ -920,7 +919,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 		if TabButton.ClassName == "Frame" and TabButton.Name ~= "Placeholder" then
 			TabButton.BackgroundTransparency = 1
 			TabButton.Title.TextTransparency = 1
-			-- TabButton.Shadow.ImageTransparency = 1
+			TabButton.Shadow.ImageTransparency = 1
 			TabButton.Image.ImageTransparency = 1
 			TabButton.UIStroke.Transparency = 1
 		end
@@ -1028,7 +1027,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 			KeyMain.Size = UDim2.new(0, 467, 0, 175)
 			KeyMain.BackgroundTransparency = 1
-			-- KeyMain.Shadow.Image.ImageTransparency = 1
+			KeyMain.Shadow.Image.ImageTransparency = 1
 			KeyMain.Title.TextTransparency = 1
 			KeyMain.Subtitle.TextTransparency = 1
 			KeyMain.KeyNote.TextTransparency = 1
@@ -1041,7 +1040,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 			TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 			TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 187)}):Play()
-			-- TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 0.5}):Play()
+			TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 0.5}):Play()
 			wait(0.05)
 			TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
 			TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
@@ -1070,7 +1069,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 				if KeyFound then 
 					TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 					TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 467, 0, 175)}):Play()
-					-- TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+					TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 					TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 					TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 					TweenService:Create(KeyMain.KeyNote, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
@@ -1092,7 +1091,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 					if AttemptsRemaining == 0 then
 						TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 						TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 467, 0, 175)}):Play()
-						-- TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+						TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 						TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 						TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 						TweenService:Create(KeyMain.KeyNote, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
@@ -1121,7 +1120,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			KeyMain.Hide.MouseButton1Click:Connect(function()
 				TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
 				TweenService:Create(KeyMain, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 467, 0, 175)}):Play()
-				-- TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
+				TweenService:Create(KeyMain.Shadow.Image, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {ImageTransparency = 1}):Play()
 				TweenService:Create(KeyMain.Title, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 				TweenService:Create(KeyMain.Subtitle, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 				TweenService:Create(KeyMain.KeyNote, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
@@ -1140,7 +1139,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end
 	end
 	if Settings.KeySystem then
-		repeat task.wait() until Passthrough
+		repeat wait() until Passthrough
 	end
 
 	Notifications.Template.Visible = false
@@ -1148,7 +1147,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 	Rayfield.Enabled = true
 	wait(0.5)
 	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
-	-- TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.55}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.55}):Play()
 	wait(0.1)
 	TweenService:Create(LoadingFrame.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
 	wait(0.05)
@@ -1185,7 +1184,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 		TabButton.BackgroundTransparency = 1
 		TabButton.Title.TextTransparency = 1
-		-- TabButton.Shadow.ImageTransparency = 1
+		TabButton.Shadow.ImageTransparency = 1
 		TabButton.Image.ImageTransparency = 1
 		TabButton.UIStroke.Transparency = 1
 
@@ -1212,7 +1211,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 		end
 
 		if SelectedTheme ~= RayfieldLibrary.Theme.Default then
-			-- TabButton.Shadow.Visible = false
+			TabButton.Shadow.Visible = false
 		end
 		TabButton.UIStroke.Color = SelectedTheme.TabStroke
 		-- Animate
@@ -1226,13 +1225,13 @@ function RayfieldLibrary:CreateWindow(Settings)
 			TweenService:Create(TabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
 			TweenService:Create(TabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
 
-			-- TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+			TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
 		else
 			FirstTab = Name
 			TabButton.BackgroundColor3 = SelectedTheme.TabBackgroundSelected
 			TabButton.Image.ImageColor3 = SelectedTheme.SelectedTabTextColor
 			TabButton.Title.TextColor3 = SelectedTheme.SelectedTabTextColor
-			-- TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+			TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
 			TweenService:Create(TabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0}):Play()
 			TweenService:Create(TabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
 			TweenService:Create(TabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0}):Play()
@@ -1248,7 +1247,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			TweenService:Create(TabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.TabBackgroundSelected}):Play()
 			TweenService:Create(TabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextColor3 = SelectedTheme.SelectedTabTextColor}):Play()
 			TweenService:Create(TabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageColor3 = SelectedTheme.SelectedTabTextColor}):Play()
-			-- TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
+			TweenService:Create(TabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.9}):Play()
 
 			for _, OtherTabButton in ipairs(TabList:GetChildren()) do
 				if OtherTabButton.Name ~= "Template" and OtherTabButton.ClassName == "Frame" and OtherTabButton ~= TabButton and OtherTabButton.Name ~= "Placeholder" then
@@ -1258,7 +1257,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(OtherTabButton, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0.7}):Play()
 					TweenService:Create(OtherTabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {TextTransparency = 0.2}):Play()
 					TweenService:Create(OtherTabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.2}):Play()
-					-- TweenService:Create(OtherTabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
+					TweenService:Create(OtherTabButton.Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ImageTransparency = 0.7}):Play()
 					TweenService:Create(OtherTabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
 				end
 			end
@@ -1394,7 +1393,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 				end
 			end)
 
-			game:GetService("UserInputService").InputEnded:Connect(function(input, gameProcessed) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then 
+			game:GetService("UserInputService").InputEnded:Connect(function(input, gameProcessed) if input.UserInputType == Enum.UserInputType.MouseButton1 then 
 					mainDragging = false
 					sliderDragging = false
 				end end)
@@ -1708,9 +1707,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Dropdown.Visible = true
 			Dropdown.Parent = TabPage
 
-			Dropdown.List.ScrollBarImageTransparency = 0
-			Dropdown.List.ScrollBarThickness = 20
-			Dropdown.List.ZIndex = 10
 			Dropdown.List.Visible = false
 
 			if typeof(DropdownSettings.CurrentOption) == "string" then
@@ -1919,113 +1915,44 @@ function RayfieldLibrary:CreateWindow(Settings)
 				end
 			end
 
-			function DropdownSettings:Set(NewOptions)
-				if typeof(NewOptions) ~= "table" then
-					print("not a table")
+			function DropdownSettings:Set(NewOption)
+				DropdownSettings.CurrentOption = NewOption
+
+				if typeof(DropdownSettings.CurrentOption) == "string" then
+					DropdownSettings.CurrentOption = {DropdownSettings.CurrentOption}
 				end
-				for _, v in Dropdown.List:GetChildren() do
-					if v.ClassName == "Frame" and v.Name ~= "Placeholder" then
-						v:Destroy()
+
+				if not DropdownSettings.MultipleOptions then
+					DropdownSettings.CurrentOption = {DropdownSettings.CurrentOption[1]}
+				end
+
+				if DropdownSettings.MultipleOptions then
+					if #DropdownSettings.CurrentOption == 1 then
+						Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
+					elseif #DropdownSettings.CurrentOption == 0 then
+						Dropdown.Selected.Text = "None"
+					else
+						Dropdown.Selected.Text = "Various"
 					end
+				else
+					Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
 				end
-				for _, Option in ipairs(NewOptions) do
-					local DropdownOption = Elements.Template.Dropdown.List.Template:Clone()
-					DropdownOption.Name = Option
-					DropdownOption.Title.Text = Option
-					DropdownOption.Parent = Dropdown.List
-					DropdownOption.Visible = true
-	
-					if DropdownSettings.CurrentOption == Option then
-						DropdownOption.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-					end
-	
-					DropdownOption.BackgroundTransparency = 1
-					DropdownOption.UIStroke.Transparency = 1
-					DropdownOption.Title.TextTransparency = 1
-	
-					DropdownOption.Interact.ZIndex = 50
-					DropdownOption.Interact.MouseButton1Click:Connect(function()
-						if not DropdownSettings.MultipleOptions and table.find(DropdownSettings.CurrentOption, Option) then 
-							return
-						end
-	
-						if table.find(DropdownSettings.CurrentOption, Option) then
-							table.remove(DropdownSettings.CurrentOption, table.find(DropdownSettings.CurrentOption, Option))
-							if DropdownSettings.MultipleOptions then
-								if #DropdownSettings.CurrentOption == 1 then
-									Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
-								elseif #DropdownSettings.CurrentOption == 0 then
-									Dropdown.Selected.Text = "None"
-								else
-									Dropdown.Selected.Text = "Various"
-								end
-							else
-								Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
-							end
-						else
-							if not DropdownSettings.MultipleOptions then
-								table.clear(DropdownSettings.CurrentOption)
-							end
-							table.insert(DropdownSettings.CurrentOption, Option)
-							if DropdownSettings.MultipleOptions then
-								if #DropdownSettings.CurrentOption == 1 then
-									Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
-								elseif #DropdownSettings.CurrentOption == 0 then
-									Dropdown.Selected.Text = "None"
-								else
-									Dropdown.Selected.Text = "Various"
-								end
-							else
-								Dropdown.Selected.Text = DropdownSettings.CurrentOption[1]
-							end
-							TweenService:Create(DropdownOption.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
-							TweenService:Create(DropdownOption, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}):Play()
-							Debounce = true
-							wait(0.2)
-							TweenService:Create(DropdownOption.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
-						end
-	
-	
-						local Success, Response = pcall(function()
-							DropdownSettings.Callback(DropdownSettings.CurrentOption)
-						end)
-	
-						if not Success then
-							TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
-							TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
-							Dropdown.Title.Text = "Callback Error"
-							print("Rayfield | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
-							wait(0.5)
-							Dropdown.Title.Text = DropdownSettings.Name
-							TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
-							TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
-						end
-	
-						for _, droption in ipairs(Dropdown.List:GetChildren()) do
-							if droption.ClassName == "Frame" and droption.Name ~= "Placeholder" and not table.find(DropdownSettings.CurrentOption, droption.Name) then
-								TweenService:Create(droption, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
-							end
-						end
-						if not DropdownSettings.MultipleOptions then
-							wait(0.1)
-							TweenService:Create(Dropdown, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {Size = UDim2.new(1, -10, 0, 45)}):Play()
-							for _, DropdownOpt in ipairs(Dropdown.List:GetChildren()) do
-								if DropdownOpt.ClassName == "Frame" and DropdownOpt.Name ~= "Placeholder" then
-									TweenService:Create(DropdownOpt, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {BackgroundTransparency = 1}):Play()
-									TweenService:Create(DropdownOpt.UIStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
-									TweenService:Create(DropdownOpt.Title, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
-								end
-							end
-							TweenService:Create(Dropdown.List, TweenInfo.new(0.3, Enum.EasingStyle.Quint), {ScrollBarImageTransparency = 1}):Play()
-							TweenService:Create(Dropdown.Toggle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Rotation = 180}):Play()	
-							wait(0.35)
-							Dropdown.List.Visible = false
-						end
-						Debounce = false	
-						SaveConfiguration()
-					end)
+
+
+				local Success, Response = pcall(function()
+					DropdownSettings.Callback(NewOption)
+				end)
+				if not Success then
+					TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+					TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 1}):Play()
+					Dropdown.Title.Text = "Callback Error"
+					print("Rayfield | "..DropdownSettings.Name.." Callback Error " ..tostring(Response))
+					wait(0.5)
+					Dropdown.Title.Text = DropdownSettings.Name
+					TweenService:Create(Dropdown, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+					TweenService:Create(Dropdown.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Quint), {Transparency = 0}):Play()
 				end
-	
+
 				for _, droption in ipairs(Dropdown.List:GetChildren()) do
 					if droption.ClassName == "Frame" and droption.Name ~= "Placeholder" then
 						if not table.find(DropdownSettings.CurrentOption, droption.Name) then
@@ -2035,6 +1962,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 						end
 					end
 				end
+				--SaveConfiguration()
 			end
 
 			if Settings.ConfigurationSaving then
@@ -2126,16 +2054,11 @@ function RayfieldLibrary:CreateWindow(Settings)
 						wait(0.25)
 						if Held then
 							local Loop; Loop = RunService.Stepped:Connect(function()
-								print("looping")
 								if not Held then
-									pcall(function()
-										KeybindSettings.Callback(false) -- maybe pcall this
-										Loop:Disconnect()
-									end)
+									KeybindSettings.Callback(false) -- maybe pcall this
+									Loop:Disconnect()
 								else
-									pcall(function()
-										KeybindSettings.Callback(true) -- maybe pcall this
-									end)
+									KeybindSettings.Callback(true) -- maybe pcall this
 								end
 							end)	
 						end
@@ -2177,7 +2100,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Toggle.Switch.BackgroundColor3 = SelectedTheme.ToggleBackground
 
 			if SelectedTheme ~= RayfieldLibrary.Theme.Default then
-				-- Toggle.Switch.Shadow.Visible = false
+				Toggle.Switch.Shadow.Visible = false
 			end
 
 			TweenService:Create(Toggle, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {BackgroundTransparency = 0}):Play()
@@ -2322,7 +2245,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Slider.Title.TextTransparency = 1
 
 			if SelectedTheme ~= RayfieldLibrary.Theme.Default then
-				-- Slider.Main.Shadow.Visible = false
+				Slider.Main.Shadow.Visible = false
 			end
 
 			Slider.Main.BackgroundColor3 = SelectedTheme.SliderBackground
@@ -2351,12 +2274,12 @@ function RayfieldLibrary:CreateWindow(Settings)
 			end)
 
 			Slider.Main.Interact.InputBegan:Connect(function(Input)
-				if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then 
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 then 
 					Dragging = true 
 				end 
 			end)
 			Slider.Main.Interact.InputEnded:Connect(function(Input) 
-				if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then 
+				if Input.UserInputType == Enum.UserInputType.MouseButton1 then 
 					Dragging = false 
 				end 
 			end)
@@ -2424,7 +2347,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 
 			function SliderSettings:Set(NewVal)
 				TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, Slider.Main.AbsoluteSize.X * ((NewVal + SliderSettings.Range[1]) / (SliderSettings.Range[2] - SliderSettings.Range[1])) > 5 and Slider.Main.AbsoluteSize.X * (NewVal / (SliderSettings.Range[2] - SliderSettings.Range[1])) or 5, 1, 0)}):Play()
-				Slider.Main.Information.Text = tostring(NewVal) .. " " .. (SliderSettings.Suffix or "")
+				Slider.Main.Information.Text = tostring(NewVal) .. " " .. SliderSettings.Suffix
 				local Success, Response = pcall(function()
 					SliderSettings.Callback(NewVal)
 				end)
@@ -2461,13 +2384,13 @@ function RayfieldLibrary:CreateWindow(Settings)
 	TweenService:Create(LoadingFrame.Version, TweenInfo.new(0.5, Enum.EasingStyle.Quint), {TextTransparency = 1}):Play()
 	wait(0.2)
 	TweenService:Create(Main, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {Size = UDim2.new(0, 500, 0, 475)}):Play()
-	-- TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
+	TweenService:Create(Main.Shadow.Image, TweenInfo.new(0.7, Enum.EasingStyle.Quint), {ImageTransparency = 0.4}):Play()
 
 	Topbar.BackgroundTransparency = 1
 	Topbar.Divider.Size = UDim2.new(0, 0, 0, 1)
 	Topbar.CornerRepair.BackgroundTransparency = 1
 	Topbar.Title.TextTransparency = 1
-	--Topbar.Theme.ImageTransparency = 1
+	Topbar.Theme.ImageTransparency = 1
 	Topbar.ChangeSize.ImageTransparency = 1
 	Topbar.Hide.ImageTransparency = 1
 
@@ -2490,21 +2413,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 	return Window
 end
 
-function RayfieldLibrary:Hide()
-	Hide()
-end
-
-function RayfieldLibrary:Unhide()
-	Unhide()
-end
-
-function RayfieldLibrary:Minimise()
-	Minimise()
-end
-
-function RayfieldLibrary:Maximise()
-	Maximise()
-end
 
 function RayfieldLibrary:Destroy()
 	Rayfield:Destroy()
@@ -2574,6 +2482,12 @@ function RayfieldLibrary:LoadConfiguration()
 	end
 end
 
--- task.delay(.5, RayfieldLibrary.LoadConfiguration, RayfieldLibrary)
+task.delay(3.5, RayfieldLibrary.LoadConfiguration, RayfieldLibrary)
+if Rayfield:FindFirstChild("Notice") then
+	Rayfield.Notice.Visible = true
+	Rayfield.Notice.Interact.MouseButton1Click:Connect(function()
+		Rayfield.Notice.Visible = false
+	end)
+end
 
-return RayfieldLibrary
+	return RayfieldLibrary
