@@ -11,7 +11,7 @@
 
 
 
-local InterfaceBuild = '9NBD_Mod'
+local InterfaceBuild = '9NBD'
 local Release = "Build 1.65"
 local RayfieldFolder = "Rayfield"
 local ConfigurationFolder = RayfieldFolder.."/Configurations"
