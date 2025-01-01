@@ -574,7 +574,7 @@ if Rayfield.AbsoluteSize.X < minSize.X and Rayfield.AbsoluteSize.Y < minSize.Y t
 end
 
 if UserInputService.TouchEnabled then
-	useMobilePrompt = false
+	useMobilePrompt = true
 end
 
 
@@ -604,8 +604,8 @@ local Icons = useStudio and require(script.Parent.icons) or loadstring(game:Http
 local CFileName = nil
 local CEnabled = false
 local Minimised = false
-local Hidden = false
-local Debounce = false
+local Hidden = true
+local Debounce = true
 local searchOpen = false
 local Notifications = Rayfield.Notifications
 
