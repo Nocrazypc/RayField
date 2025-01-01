@@ -566,11 +566,11 @@ elseif not useStudio then
 end
 
 
-local minSize = Vector2.new(1024, 768)
+local minSize = Vector2.new(102, 76)
 local useMobileSizing
 
 if Rayfield.AbsoluteSize.X < minSize.X and Rayfield.AbsoluteSize.Y < minSize.Y then
-	useMobileSizing = false
+	useMobileSizing = true
 end
 
 if UserInputService.TouchEnabled then
@@ -604,7 +604,7 @@ local Icons = useStudio and require(script.Parent.icons) or loadstring(game:Http
 local CFileName = nil
 local CEnabled = false
 local Minimised = false
-local Hidden = true
+local Hidden = false
 local Debounce = false
 local searchOpen = false
 local Notifications = Rayfield.Notifications
