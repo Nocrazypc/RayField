@@ -11,7 +11,7 @@
 
 
 
-local InterfaceBuild = '9NBD'
+local InterfaceBuild = '9NBD_Mod'
 local Release = "Build 1.65"
 local RayfieldFolder = "Rayfield"
 local ConfigurationFolder = RayfieldFolder.."/Configurations"
@@ -566,15 +566,15 @@ elseif not useStudio then
 end
 
 
-local minSize = Vector2.new(102, 76)
+local minSize = Vector2.new(1024, 768)
 local useMobileSizing
 
 if Rayfield.AbsoluteSize.X < minSize.X and Rayfield.AbsoluteSize.Y < minSize.Y then
-	useMobileSizing = true
+	useMobileSizing = false
 end
 
 if UserInputService.TouchEnabled then
-	useMobilePrompt = true
+	useMobilePrompt = false
 end
 
 
